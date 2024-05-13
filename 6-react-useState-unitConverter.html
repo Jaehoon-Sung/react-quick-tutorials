@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = document.getElementById("root");
+    function TimeConverter() {
+      const [amount, setAmount] = React.useState(0);
+      const [isHourChosen, setIsHourChosen] = React.useState(false);
+      const onChange = (event) => {
+        setAmount(event.target.value);
+      };
+      const reset = () => {
+        setAmount(0);
+      };
+      const onFlip = () => {
+        setIsHourChosen((current) => !current);
+        reset();
+      };
+
+      return (
+        <div>
+          <div>
+            <div>
+              <label htmlFor="minutes">Minutes</label>
+              <input
+                value={isHourChosen ? 60 * amount : amount}
+                id="minutes"
+                placeholder="Minutes"
+                type="number"
+                onChange={onChange}
+                disabled={isHourChosen}
+              />
+            </div>
+            <div>
+              <label htmlFor="hours">Hours</label>
+              <input
+                value={isHourChosen ? amount : Math.round(amount / 60)}
+                id="hours"
+                placeholder="Hours"
+                type="number"
+                onChange={onChange}
+                disabled={!isHourChosen}
+              />
+            </div>
+            <h3>You want to convert {amount} minutes to hours. </h3>
+          </div>
+          <div>
+            <button onClick={reset}>Reset</button>
+          </div>
+          <div>
+            <button onClick={onFlip}>{isHourChosen ? "Hour to Min" : "Minutes to Hour"}</button>
+          </div>
+        </div>
+      );
+    }
+    function DistanceConverter() {
+      const [amount, setAmount] = React.useState(0);
+      const [isHourChosen, setIsHourChosen] = React.useState(false);
+      const onChange = (event) => {
+        setAmount(event.target.value);
+      };
+      const reset = () => {
+        setAmount(0);
+      };
+      const onFlip = () => {
+        setIsHourChosen((current) => !current);
+        reset();
+      };
+
+      return (
+        <div>
+          <div>
+            <div>
+              <label htmlFor="minutes">Kms</label>
+              <input
+                value={isHourChosen ? 60 * amount : amount}
+                id="minutes"
+                placeholder="Minutes"
+                type="number"
+                onChange={onChange}
+                disabled={isHourChosen}
+              />
+            </div>
+            <div>
+              <label htmlFor="hours">Hours</label>
+              <input
+                value={isHourChosen ? amount : Math.round(amount / 60)}
+                id="hours"
+                placeholder="Hours"
+                type="number"
+                onChange={onChange}
+                disabled={!isHourChosen}
+              />
+            </div>
+            <h3>You want to convert {amount} minutes to hours. </h3>
+          </div>
+          <div>
+            <button onClick={reset}>Reset</button>
+          </div>
+          <div>
+            <button onClick={onFlip}>{isHourChosen ? "Hour to Min" : "Minutes to Hour"}</button>
+          </div>
+        </div>
+      );
+    }
+    function App() {
+      const [index, setIndex] = React.useState();
+      const onSelect = (event) => {
+        setIndex(event.target.value);
+      };
+
+      return (
+        <div>
+          <h1>Super Converter</h1>
+          <div>
+            <select onChange={onSelect}>
+              <option value="0"> Time Converter </option>
+              <option value="1"> Distance Converter </option>
+            </select>
+          </div>
+          <div>{index == "0" ? <TimeConverter /> : <DistanceConverter />}</div>
+        </div>
+      );
+    }
+    ReactDOM.render(<App />, root);
+  </script>
+</html>
